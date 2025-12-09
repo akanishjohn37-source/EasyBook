@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
+from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,9 +25,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-q-=t+x%cd0#i=#55x)zqv^fid2oa@)4)bi^$#9##*ma7q-#rd^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = 'RENDER' not in os.environ
 
 ALLOWED_HOSTS = []
+
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
 # Application definition
@@ -42,6 +48,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -75,14 +82,10 @@ WSGI_APPLICATION = 'easybook.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-    'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'easy_book_db',
-        'USER':'root',
-        'PASSWORD':'',
-        'HOST':'localhost',
-        'PORT':'3306',
-    }
+    'default': dj_database_url.config(
+        default='sqlite:///db.sqlite3',
+        conn_max_age=600
+    )
 }
 
 
@@ -122,9 +125,11 @@ USE_TZ = True
 
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 MEDIA_URL ='/media/'
 MEDIA_ROOT =os.path.join(BASE_DIR,'media')
-STATIC_ROOT =os.path.join(BASE_DIR,'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
