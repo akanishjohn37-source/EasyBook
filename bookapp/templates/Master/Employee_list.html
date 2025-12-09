@@ -1,0 +1,62 @@
+
+{% extends "Master/header.html" %}
+{% block content %}
+{% load static %}
+
+
+<div id="page-wrapper">
+    <div class="main-page">
+        <div class="forms">
+
+            <h3 class="title1">Employee List</h3>
+
+            <div class="col-sm-12" style="margin-top: 10px;">
+    <div class="form-title">
+
+                    <h4>Employee :</h4>
+                </div>
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                  <div class="alert alert-success"> {{message }}</div>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% if data %}
+    <table class="table table-striped table-bordered">
+      <thead><th>Id</th><th>Name</th><th>Address</th><th>Email Id</th><th>Joining date</th><th>DOB</th><th>Gender</th><th>Qualification</th><th>Phone Number</th><th>Photo</th><th>Designation</th><th>#</th></thead>
+
+      {%  for k in data  %}
+
+        <tr>
+
+
+          <td>{{forloop.counter}}</td>
+              <td>{{k.firstename}}&nbsp;&nbsp;{{k.lastname}}</td>
+              <td>{{k.address}}</td>
+              <td>{{k.email_id}}</td>
+              <td>{{k.joining_date}}</td>
+              <td>{{k.dob}}</td>
+              <td>{{k.gender}}</td>
+              <td>{{k.qualification}}</td>
+              <td>{{k.phone_number}}</td>
+
+              <td><img src="{{k.photo}}" width="100" height="80"></td>
+              <td>{{k.desingnation}}</td>
+
+              <td><a href="/edit_employee/{{k.employee_id}}" class="btn btn-info">Edit</a></td>
+              <td><a href="/delete_employee/{{k.employee_id}}" onclick="return ConfirmDialog();" class="btn btn-danger">Delete</a></td>
+          </tr>
+
+          {% endfor  %}
+    </table>
+    {% else %}
+    <div class="alert alert-success"> No List Available</div>
+    {% endif %}  </div>
+            <div class="row">
+
+        </div>
+    </div>
+</div>
+<!--footer-->
+{% endblock %}

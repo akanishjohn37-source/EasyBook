@@ -1,0 +1,237 @@
+{% extends "User/header.html" %}
+{% block content %}
+{% load static %}
+
+        <!-- //navbar ends here -->
+        <!-- banner -->
+
+     
+        <div class="crumbs text-center">
+			<div class="container">
+				<div class="row">
+					<ul class="btn-group btn-breadcrumb bc-list">
+						<li class="btn btn1">
+							<a href="/customer/">
+								<i class="glyphicon glyphicon-home"></i>
+							</a>
+						</li>
+						<li class="btn btn2">
+							<a href="/customer/">product catalogue</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			{% if messages %}
+			<ul class="messages">
+				{% for message in messages %}
+			  <div class="alert alert-success"> {{message }}</div>
+				{% endfor %}
+			</ul>
+			{% endif %}
+		</div>
+		<!--//breadcrumbs ends here-->
+		<!-- Shop -->
+		<div class="innerf-pages section">
+			<div class="container-cart">
+				<!-- product left -->
+				<div class="side-bar col-md-3">
+					<!--preference -->
+					<div class="left-side">
+						<h3 class="shopf-sear-headits-sear-head">
+							Categories</h3>
+						<ul class="cat">
+                            {%  for k1 in data1  %}
+                            <li>
+								<a href="/single_category/{{k1.category_id}}">{{k1.category}}</a>
+							</li>
+                  
+                    {% endfor  %}
+							
+							
+
+						</ul>
+					</div>
+					<!-- // preference -->
+					<div class="search-hotel">
+					
+							<span>Search</span> Book</h3>
+						<form action="/search_book/" method="post">
+							{% csrf_token %}
+							<input type="search" placeholder="search here" name="search" required="">
+							<input type="submit" value="Search">
+						</form>
+					</div>
+					<!-- price range -->
+					<div class="range">
+					
+							
+                            <h3 class="shopf-sear-headits-sear-head">
+                                Author</h3>
+                            <ul class="cat">
+                                {%  for k1 in data2 %}
+                                <li>
+                                    <a href="/single_author/{{k1.author_id}}">{{k1.author}}</a>
+                                </li>
+                      
+                        {% endfor  %}
+                                
+                                
+    
+                            </ul>
+					</div>
+					<!-- //price range -->
+					<!--preference -->
+                    <div class="range">
+						<h3 class="shopf-sear-headits-sear-head">
+							
+                            <h3 class="shopf-sear-headits-sear-head">
+                                Language</h3>
+                            <ul class="cat">
+                                {%  for k1 in data3 %}
+                                <li>
+                                    <a href="/single_language/{{k1.language_id}}">{{k1.language}}</a>
+                                </li>
+                      
+                        {% endfor  %}
+                                
+                                
+    
+                            </ul>
+					</div>
+					
+					<!-- //reviews -->
+					<div class="range">
+						<h3 class="shopf-sear-headits-sear-head">
+							
+                            <h3 class="shopf-sear-headits-sear-head">
+                                Type</h3>
+								
+                            <ul class="cat">
+                             
+                                <li>
+                                    <a href="/single_type/Journals">Journals</a>
+                                </li>
+								<li>
+                                    <a href="/single_type/Article">Article</a>
+                                </li>
+                     
+								<li>
+                                    <a href="/single_type/E-Book">E-Book</a>
+                                </li>
+								<li>
+                                    <a href="/single_type/Physical Book">Physical Book</a>
+                                </li>
+								<li>
+                                    <a href="/single_type/Old Book">Old Book</a>
+                                </li>
+								<li>
+                                    <a href="/single_type/Magazine">Magazine</a>
+                                </li>
+                            </ul>
+					</div>
+					
+					<!-- //reviews -->
+
+				</div>
+				<!-- //product left -->
+				<!-- product right -->
+				<div class="left-ads-display col-md-9">
+					<div class="wrapper_top_shop">
+						<!-- product-sec1 -->
+						<div class="product-sec1">
+							<!-- row1-->
+                            {%  for k in data  %}
+							<div class="col-md-3 product-men">
+								<div class="product-chr-info chr">
+									<div class="thumbnail">
+										<a href="/single_book/{{k.book_id}}">
+											<img src="{{k.image}}" style="width:100%; height:200px" alt="">
+										</a>
+									</div>
+									<div class="caption">
+										<h4>{{k.book_name}}</h4>
+										<p></p>
+										<div class="matrlf-mid">
+											<ul class="rating">
+												<li>
+													<a href="#">
+														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
+													</a>
+												</li>
+												<li>
+													<a href="#">
+														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
+													</a>
+												</li>
+												<li>
+													<a href="#">
+														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
+													</a>
+												</li>
+												<li>
+													<a href="#">
+														<span class="fa fa-star gray-star" aria-hidden="true"></span>
+													</a>
+												</li>
+												<li>
+													<a href="#">
+														<span class="fa fa-star gray-star" aria-hidden="true"></span>
+													</a>
+												</li>
+											</ul>
+											<ul class="price-list">
+											
+												<li>
+													&#8377;  {{k.price}}
+												</li>
+												
+											</ul>
+
+											<div class="clearfix"> </div>
+										</div>
+										{% if k.type == 'E-Book' or k.type == 'Article' or k.type == 'Journals' or k.type == 'Magazine' %}
+
+									<div>DOCUMENT</div>
+
+										
+												<a href="/payment_no_book/{{k.book_id}}" class="btn btn-info" style="width: 100%; margin-top: 10px;">Pay Now
+													
+												</a>
+											
+									{% else %}
+									<div>BOOK</div>
+
+										<form action="#" method="post">
+                                            {% csrf_token %}
+											<input type="hidden" name="cmd" value="_cart">
+											<input type="hidden" name="add" value="1">
+                                            <input type="hidden" name="item_name" value="{{k.book_name}}" />
+                                                <input type="hidden" name="item_id" value="{{k.book_id}}" />
+												<input type="hidden" name="item_stock"  value="{{k.quantity}}" />
+												<input type="hidden" name="amount" value="{{k.price}}" />
+                                                
+											<input type="hidden" name="chr_item" value="{{k.book_name}}">
+											<input type="hidden" name="amount" value="{{k.price}}">
+											<button type="submit" class="chr-cart pchr-cart">Add to cart
+												<i class="fa fa-cart-plus" aria-hidden="true"></i>
+											</button>
+											<a href="#" data-toggle="modal" data-target="#myModal1"></a>
+										</form>
+										{% endif %}
+									</div>
+								</div>
+							</div>
+                            {% endfor  %}							<!-- //row3 -->
+							<div class="clearfix"></div>
+
+						</div>
+
+						<!-- //product-sec1 -->
+						<div class="clearfix"></div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+
+			</div>
+		</div>
+    {% endblock %}

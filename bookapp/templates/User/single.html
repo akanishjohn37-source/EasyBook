@@ -1,0 +1,144 @@
+{% extends "User/header.html" %}
+{% block content %}
+{% load static %}
+
+        <!-- //navbar ends here -->
+        <!-- banner -->
+
+     
+        <div class="crumbs text-center">
+			<div class="container">
+				<div class="row">
+					<ul class="btn-group btn-breadcrumb bc-list">
+						<li class="btn btn1">
+							<a href="/customer/">
+								<i class="glyphicon glyphicon-home"></i>
+							</a>
+						</li>
+						<li class="btn btn2">
+							<a href="/customer/">product catalogue</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+        {%  for k in data  %}
+                <div class="innerf-pages section">
+                    <div class="container">
+                        <div class="col-md-4 single-right-left ">
+                            <div class="grid images_3_of_2">
+                                <div class="flexslider1">
+                                    <ul class="slides">
+                                        <li data-thumb="{{k.9}}">
+                                            <div class="thumb-image">
+                                                <img src="{{k.9}}" data-imagezoom="true" alt=" " class="img-responsive"> </div>
+                                        </li>
+                                 
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+        
+                        </div>
+                        <div class="col-md-8 single-right-left simpleCart_shelfItem">
+                            <h3>{{k.5}}
+                                <span></span>
+                            </h3>
+                           
+                            <div class="caption">
+        
+                                <ul class="rating-single">
+                                    <li>
+                                        <a href="#">
+                                            <span class="fa fa-star yellow-star" aria-hidden="true"></span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="fa fa-star yellow-star" aria-hidden="true"></span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="fa fa-star yellow-star" aria-hidden="true"></span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="fa fa-star yellow-star" aria-hidden="true"></span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="fa fa-star yellow-star" aria-hidden="true"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"> </div>
+                                <h6>
+                                    &#8377; {{k.7}}</h6>
+                            </div>
+                            <div class="desc_single">
+                                <h5>Description</h5>
+                                <p>{{k.10}}</p>
+                            </div>
+                            <div class="occasional">
+                                <h5>Specifications</h5>
+                              
+                                <ul class="single_specific">
+                                    <li>
+                                        <span>Category :</span> {{k.13}}</li>
+                                    <li>
+                                        <span>Author :</span> {{k.14}}</li>
+                                    <li>
+                                        <span>Language :</span> {{k.15}}</li>
+                                 
+                                  
+                                </ul>
+                              
+                            </div>
+                        
+                            <div class="occasion-cart">
+                                <div class="chr single-item single_page_b">
+                                    {% if k.4 == 'E-Book' or k.4 == 'Article' or k.4 == 'Journals' or k.4 == 'Magazine' %}
+
+									<div>DOCUMENT</div>
+
+										
+												<a href="/payment_no_book/{{k.0}}" class="btn btn-info" style="width: 100%; margin-top: 10px;">Pay Now
+													
+												</a>
+											
+									{% else %}
+									<div>BOOK</div>
+                                    <form action="#" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="cmd" value="_cart">
+                                        <input type="hidden" name="add" value="1">
+                                        <input type="hidden" name="item_name" value="{{k.book_name}}" />
+                                            <input type="hidden" name="item_id" value="{{k.book_id}}" />
+                                            <input type="hidden" name="item_stock"  value="{{k.quantity}}" />
+                                            <input type="hidden" name="amount" value="{{k.price}}" />
+                                            
+                                        <input type="hidden" name="chr_item" value="{{k.book_name}}">
+                                        <input type="hidden" name="amount" value="100.00">
+                                        <button type="submit" class="chr-cart pchr-cart">Add to cart
+                                            <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                                        </button>
+                                        <a href="#" data-toggle="modal" data-target="#myModal1"></a>
+                                    </form>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                </div>
+                {% endfor  %}
+				<div class="clearfix"></div>
+
+			</div>
+		</div>
+        <script src="{%static 'assets/js/jquery-2.2.3.min.js' %}"></script>
+        <script src="{%static 'assets/js/imagezoom.js' %}"></script>
+    {% endblock %}

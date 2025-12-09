@@ -1,0 +1,213 @@
+{% extends "Author/header.html" %}
+{% block content %}
+{% load static %}
+<div class="pagetitle">
+    <h1>Product</h1>
+    <nav>
+
+    </nav>
+  </div>
+    <section class="section" style="min-height: 500px;">
+      <div class="row">
+
+
+
+
+
+          <div class="card">
+            <div class="card-body">
+
+              <h5 class="card-title">Add Product<h5>
+              <form action="/au_update_product/{{data.book_id}}" method="post" id="myform" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-sm-6">
+                   
+               <div class="form-group"><label  class="form-label" for="">Category</label>   <select name="category" id="category" class="form-control">
+                      <option value="">--Select--</option>
+                      {%  for k1 in data1  %}
+                     {% if k1.category_id == data.category_id %}
+                      <option value="{{k1.category_id}}" selected>{{k1.category}}</option>
+                      {% else %}
+                      <option value="{{k1.category_id}}">{{k1.category}}</option>
+                      {% endif %}
+                      {% endfor  %}
+                  </select> </div>
+  
+                 
+                <div class="form-group"><label  class="form-label" for=""> Language</label>   <select name="language_id" id="language_id" class="form-control">
+                  <option value="">--Select--</option>
+                  {%  for k3 in data3  %}
+                  {% if k3.language_id == data.language_id %}
+                  <option value="{{k3.language_id}}" selected>{{k3.language}}</option>
+                  {% else %}
+                  <option value="{{k3.language_id}}">{{k3.language}}</option>
+                  {% endif %}
+                 
+                  {% endfor  %}
+              </select> </div>
+              <div class="form-group"><label  class="form-label" for="">Type</label>   <select name="type" id="type" class="form-control">
+                <option value="{{data.type}}">{{data.type}}</option>
+                <option value="">--Select--</option>
+                <option value="Journals">Journals</option>
+                <option value="Article">Article</option>
+                <option value="E-Book">E-Book</option>
+                <option value="Physical Book">Physical Book</option>
+                <option value="Old Book">Old Book</option>
+                <option value="Magazine">Magazine</option>
+            </select> </div>
+                  <div class="form-group"> <label  class="form-label" for="">Book Name / Title</label>
+                      <input type="text" class="form-control" id="" placeholder="Book Name" name="book_name" value="{{ data.book_name}}"> </div>
+                      {% if data.type == 'E-Book' or data.type == 'Article' or data.type == 'Journals' %}
+                      <div class="form-group"> <label  class="form-label" for="">Quantity</label>
+                          <input type="text" class="form-control" id="quantity" placeholder="quantity" disabled name="quantity" value="0"> </div>
+{% else %}
+<div class="form-group"> <label  class="form-label" for="">Quantity</label>
+  <input type="text" class="form-control" id="quantity" placeholder="quantity"  name="quantity" value="{{ data.quantity}}"> </div>
+                          {% endif %}
+                          <div class="form-group"> <label  class="form-label" for="">Price</label>
+                              <input type="text" class="form-control" id="" value="{{ data.price}}" placeholder="price" name="price"> </div>
+  
+  
+  
+  
+  
+  </div>
+  <div class="col-sm-6">
+  
+    <div class="form-group"> <label  class="form-label" for="">Upload Image</label>
+      <input type="file" class="form-control" id="" placeholder="image" name="image"> </div>
+  
+      <div class="form-group"> <label  class="form-label" for="">Upload Document</label>
+        <input type="file" class="form-control" id="" placeholder="Document" name="doc"> </div>
+  
+  
+        <div class="form-group"> <label  class="form-label" for="">Description</label>
+         <textarea class="form-control" name="description" placeholder="Description">{{ data.description}}</textarea></div>
+  </div>
+                                <div class="text-center" style="margin:5px">       <button type="submit" class="btn btn-info">Submit</button></div>
+
+</div>
+
+                                       </div>
+                               </form>
+                               <script src="{% static 'assets/Validation/jquery-1.11.1.min.js' %}"></script>
+                               <script src="{% static 'assets/Validation/jquery_validate.js' %}"></script>
+                               <script src="{% static 'assets/Validation/additional_validate.js' %}"></script>
+                               <script>
+                                 $("#type").on("change", function() {
+                                   type=$("#type").val()
+                                   if(type=='Physical Book' || type=='Old Book')
+                                   {
+                                   $('input[name=doc]').attr("disabled", "disabled");
+                                   $('input[name=quantity]').removeAttr('disabled');
+                                   $("#doc").val()=""
+                                   
+                                   }
+                                   else if(type=='Journals' || type=='Article' || type=='E-Book')
+                                   {
+                                   $('input[name=doc]').removeAttr('disabled');
+                                   $('input[name=quantity]').attr("disabled", "disabled");
+                                   $("#quantity").val(0)
+                                   
+                                   }
+                                   else{
+                                     $('input[name=doc]').removeAttr('disabled');
+                                  
+                                   }
+               });
+                               </script>
+               <script>
+               (function ($, W, D)
+               {
+               var JQUERY4U = {};
+               JQUERY4U.UTIL =
+               {
+                 setupFormValidation: function ()
+                 {
+                   $.validator.addMethod(
+               "regex",
+               function(value, element, regexp) {
+               var check = false;
+               return this.optional(element) || regexp.test(value);
+               },
+               "Not a valid Input."
+               );
+               
+                 //form validation rules
+                 $("#myform").validate({
+                   rules: {
+                                       category: {
+                                         required: true,
+               
+               
+                                       },
+                                       author_id: {
+                                         required: true,
+               
+               
+                                       },
+                                       language_id: {
+                                         required: true,
+               
+               
+                                       },
+                                       book_name: {
+                                         required: true,
+                                         regex :/^[a-zA-Z0-9 ]+$/,
+               
+                                       },
+                                    
+                                       quantity: {
+                                        
+                                         number:true
+               
+                                       },
+                                       price: {
+                                         required: true,
+                                         number:true
+               
+                                       },
+                                       description: {
+                                         required: true,
+               
+                                       },
+                                       
+               
+               
+                                       image: {
+                                      
+               
+                                         extension:'jpg|jpeg|png'
+               
+                                       },
+                                       doc: {
+                                       
+               
+                                         extension:'doc|pdf|docx'
+               
+                                       },
+                                     },
+                                     messages: {
+               
+               
+               
+                     },
+                     submitHandler: function (form) {
+                     form.submit();
+                     }
+                 });
+               }
+               }
+               //when the dom has loaded setup form validation rules
+               $(D).ready(function ($) {
+               JQUERY4U.UTIL.setupFormValidation();
+               });
+               })(jQuery, window, document);
+               </script>
+          </div></div>
+        </div>
+      </div>
+    </section>
+
+    {% endblock %}

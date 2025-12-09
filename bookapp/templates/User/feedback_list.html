@@ -1,0 +1,88 @@
+{% extends "User/header.html" %}
+{% block content %}
+{% load static %}
+
+        <!-- //navbar ends here -->
+        <!-- banner -->
+
+        <div class="crumbs text-center">
+			<div class="container">
+				<div class="row">
+					<ul class="btn-group btn-breadcrumb bc-list">
+						<li class="btn btn1">
+							<a href="/Customer/">
+								<i class="glyphicon glyphicon-home"></i>
+							</a>
+						</li>
+						<li class="btn btn2">
+							<a href="/Customer/">Feedback</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!--//breadcrumbs ends here-->
+		<!-- Shop -->
+
+				<!-- //product left -->
+				<!-- product right -->
+				<div class="left-ads-display col-md-12">
+					<div class="wrapper_top_shop">
+						<!-- product-sec1 -->
+						<div class="product-sec1" style="margin-top: 20px;">
+							<!-- row1-->
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8" style="min-height: 300px;"> 
+      {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+        <div class="alert alert-success"> {{message }}</div>
+          {% endfor %}
+      </ul>
+      {% endif %}
+      {% if data1 %}
+      <table class="table table-striped table-bordered">
+          <thead><th>Id</th><th>Subject</th><th>Feedback</th><th>Reply</th></thead>
+
+      {%  for k in data1  %}
+
+      <tr>
+
+
+            <td>{{forloop.counter}}</td>
+            <td>{{k.feedback_subject}}</td>
+            <td>{{k.feedback}}</td>
+            <td>{{k.reply}}</td>
+           
+            </td>
+            
+            <td><a href="/delete_feedback/{{k.feedback_id}}"  onclick="return ConfirmDialog();" class="btn btn-danger">Delete</a></td>
+
+        </tr>
+
+        {% endfor  %}
+        {% else %}
+        <div class="alert alert-success"> No List Available</div>
+        {% endif %}
+
+  </table>
+
+    </div>
+    <div class="col-md-2"></div>
+</div>
+                          
+                          					<!-- //row3 -->
+							<div class="clearfix"></div>
+
+						</div>
+
+						<!-- //product-sec1 -->
+						<div class="clearfix"></div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+
+			</div>
+		</div>
+    {% endblock %}

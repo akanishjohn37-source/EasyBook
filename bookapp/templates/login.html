@@ -1,0 +1,129 @@
+{% extends "header.html" %}
+{% block content %}
+{% load static %}
+
+        <!-- //navbar ends here -->
+        <!-- banner -->
+
+        <div class="crumbs text-center">
+            <div class="container">
+                <div class="row">
+                    <ul class="btn-group btn-breadcrumb bc-list">
+                        <li class="btn btn1">
+                            <a href="/index/">
+                                <i class="glyphicon glyphicon-home"></i>
+                            </a>
+                        </li>
+                        <li class="btn btn2">
+                            <a href="/login/">sign in & sign up</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--//breadcrumbs ends here-->
+        <!-- signin and signup form -->
+        <div class="login-form section text-center">
+            <div class="container">
+                <h4 class="rad-txt">
+                    <span class="abtxt1">Sign in</span>
+                    <span class="abtext">sign up</span>
+                </h4>
+                <div id="loginbox" style="margin-top:30px;" class="mainbox  loginbox">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <div class="panel-title">Sign In</div>
+                            <div class="fpassword">
+                             
+                            </div>
+                        </div>
+                        <div style="padding-top:30px" class="panel-body">
+                            <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+                            {% if messages %}
+                            <ul class="messages">
+                                {% for message in messages %}
+                              <div class="alert alert-success"> {{message }}</div>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                            <form  action="/login_action/"  method="post" id="myform">
+                                {% csrf_token %}
+                
+            <div> 	
+                <span>Username</span>
+                <input type="text" class="form-control" name="username"> 
+            </div>
+            <div> 
+                <span >Password</span>
+                <input type="password"  class="form-control" name="password">
+            </div>				
+                <input style="margin-top: 10px;" type="submit" class="btn btn-info" value="Login"> 
+            </form>
+            <script src="{% static 'assets/Validation/jquery-1.11.1.min.js' %}"></script>
+            <script src="{% static 'assets/Validation/jquery_validate.js' %}"></script>
+            <script src="{% static 'assets/Validation/additional_validate.js' %}"></script>
+        <script>
+        (function ($, W, D)
+        {
+        var JQUERY4U = {};
+        JQUERY4U.UTIL =
+        {
+        setupFormValidation: function ()
+        {
+        $.validator.addMethod(
+        "regex",
+        function(value, element, regexp) {
+        var check = false;
+        return this.optional(element) || regexp.test(value);
+        },
+        "Not a valid Input."
+        );
+        
+        
+        
+        //form validation rules
+        $("#myform").validate({
+        ignore: [],
+        rules: {
+           
+        
+        
+        
+               
+                    username: {
+                        required: true,
+                        
+        
+                    },
+                    password: {
+                        required: true,
+                         
+        
+                    },
+                    
+                    
+                  },
+                  messages: {
+        
+                 
+        },
+        submitHandler: function (form) {
+        form.submit();
+        }
+        });
+        }
+        }
+        //when the dom has loaded setup form validation rules
+        $(D).ready(function ($) {
+        JQUERY4U.UTIL.setupFormValidation();
+        });
+        })(jQuery, window, document);
+        </script>
+                        </div>
+                    </div>
+                </div>
+              
+            </div>
+        </div>
+    </div>
+    {% endblock %}
